@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generar Correo</title>
+    <script>
+        function generarCorreo() {
+            // Obtener los valores ingresados
+            var nombre = document.getElementById("nombre").value.trim();
+            var apellido = document.getElementById("apellido").value.trim();
+            var fechaNacimiento = document.getElementById("fechaNacimiento").value;
+
+            // Validar que todos los campos estén llenos
+            if (nombre === "" || apellido === "" || fechaNacimiento === "") {
+                alert("Por favor, completa todos los campos.");
+                return;
+            }
+
+            
+            var partesNombre = nombre.split(" ");
+            var primerNombre = partesNombre[0] || "";
+            var segundoNombre = partesNombre[1] || "";
+
+            var partesApellido = apellido.split(" ");
+            var primerApellido = partesApellido[0] || "";
+            var segundoApellido = partesApellido[1] || "";
+
+            var letrasIntermediasPrimerNombre = primerNombre.substring(1, 3).toLowerCase();
+
+            var fragmentoSegundoNombre = segundoNombre.substring(2).toLowerCase();
+
+           
+            var inicialPrimerApellido = primerApellido[0]?.toLowerCase() || ""
+
+            var ultimasLetrasSegundoApellido = segundoApellido.slice(-2).toLowerCase();
+
+            var añoNacimiento = fechaNacimiento.split("-")[0].slice(2);
+
+            var correo = inicialPrimerApellido + letrasIntermediasPrimerNombre + ultimasLetrasSegundoApellido + fragmentoSegundoNombre + añoNacimiento + "@gmail.com";
+            document.getElementById("correo").value = correo;
+        }
+
+        function validarContraseña() {
+            var contraseña = document.getElementById("contraseña").value;
+
+            var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&-])[A-Za-z\d@$!%*?&\- ]{8,}$/;
+
+                                                                               
+            if (!regex.test(contraseña)) {
+                alert("La contraseña debe tener al menos 8 caracteres, incluyendo una letra mayúscula, una minúscula, un número y un carácter especial.");
+                return false;
+            }
+
+            alert("Contraseña válida");
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <h1>Generar Correo</h1>
+    <form onsubmit="event.preventDefault(); generarCorreo(); validarContraseña();">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" placeholder=""><br><br>
+
+        <label for="apellido">Apellidos:</label>
+        <input type="text" id="apellido" name="apellido" placeholder=""><br><br>
+
+        <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+        <input type="date" id="fechaNacimiento" name="fechaNacimiento"><br><br>
+
+        <label for="correo">Correo Generado:</label>
+        <input type="text" id="correo" name="correo" readonly><br><br>
+
+        <label for="contraseña">Contraseña:</label>
+        <input type="password" id="contraseña" name="contraseña" placeholder=""><br><br>
+
+        <button type="submit">Generar</button>
+    </form>
+</body>
+</html>
